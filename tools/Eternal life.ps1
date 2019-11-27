@@ -33,6 +33,7 @@ function Password_Changer
     {
         Get_User_Information("SamAccountName")
         $AD_User | Set-ADAccountPassword -NewPassword $pwd -Reset
+        $AD_User | Set-ADUser -ChangePasswordAtLogon $True
         [System.Windows.MessageBox]::Show("Password was changed successfully!", "Success", "Ok", "Information")
     } 
     else
@@ -79,17 +80,20 @@ function New-Menu {
 
 }
 
-
+# Program version
 $program_version = "1.0"
 $program_title = "Eternal life $program_version `n"
 
+# Active Directory Domain and Organizational Unit data
+$RYVS_Auto_Elever_OU = "OU=Auto Elever,OU=Brukere,OU=RYVS,OU=Virksomheter"
+$BFK_DC = "DC=bfkskole,DC=top,DC=no"
 
-while($true)
+while($True)
 {
     $username = Read-Host -Prompt "Username" # Active Directory username
-    while($true)
+    while($True)
     {
-        $AD_User = Get-ADUser -SearchBase "OU=Auto Elever,OU=Brukere,OU=RYVS,OU=Virksomheter,DC=bfkskole,DC=top,DC=no" -Filter {SamAccountName -eq $username} # AD user selected by $username
+        $AD_User = Get-ADUser -SearchBase "$RYVS_Auto_Elever_OU,$BFK_DC" -Filter {SamAccountName -eq $username} # AD user selected by $username
         Get_User_Information
         
         $Main_Menu = New-Menu -Title $program_title -Question 'Please select option'
