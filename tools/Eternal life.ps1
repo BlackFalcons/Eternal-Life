@@ -89,10 +89,10 @@ function New_Menu {
         [String]$Question
     )
 
-    $Change_Password = Menu_Item -Option "&Change Password" -Tutorial "Option will change AD User's password to user selected password."
-    $Get_User_Info = Menu_Item -Option '&User Info' -Tutorial "Option will display data about the selected user."
-    $Select_New_User = Menu_Item -Option "&Select new user" -Tutorial "Option will allow user to select a new user to administrate."
-    $Clear_Terminal = Menu_Item -Option "&Wipe terminal" -Tutorial "Option will clear the terminal"
+    $Change_Password = New_Menu_Item -Option "&Change Password" -Tutorial "Option will change AD User's password to user selected password."
+    $Get_User_Info = New_Menu_Item -Option '&User Info' -Tutorial "Option will display data about the selected user."
+    $Select_New_User = New_Menu_Item -Option "&Select new user" -Tutorial "Option will allow user to select a new user to administrate."
+    $Clear_Terminal = New_Menu_Item -Option "&Wipe terminal" -Tutorial "Option will clear the terminal"
     
     
     $options = [ChoiceDescription[]]($Get_User_Info, $change_password, $Select_New_User, $Clear_Terminal)
