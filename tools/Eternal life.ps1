@@ -5,7 +5,7 @@ clear # Cleaner terminal when run
 function Secure_String_To_String
 {
     param(
-    [string] $secString =
+    [string] $secString
     )
     return [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($secString))
 }
