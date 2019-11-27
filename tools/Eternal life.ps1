@@ -5,7 +5,7 @@ clear # Cleaner terminal when run
 function Program_Version
 {
     # Program version
-    Write-Host "$program_title"
+    Write-Host $program_title
 }
 
 
