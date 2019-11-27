@@ -16,6 +16,17 @@ function Secure_String_To_String
     return [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($secString))
 }
 
+function Message_Box
+{
+    Param(
+        [string]$Header = "Not defined",
+        [string]$Message = "Not defined",
+        [string]$Buttons = "Ok",
+        [string]$Type = "Information"
+    )
+    Write-Host $Message
+    [System.Windows.MessageBox]::Show("$Message", $Header, $Buttons, $Type)
+}
 
 function Get_User_Information
 {
