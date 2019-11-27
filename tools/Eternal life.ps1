@@ -1,4 +1,4 @@
-﻿using namespace System.Management.Automation.Host
+using namespace System.Management.Automation.Host
 clear # Cleaner terminal when run
 
 function Program_Version
@@ -10,8 +10,8 @@ function Program_Version
 
 function Secure_String_To_String
 {
-    param(
-    [string] $secString
+    Param(
+    [String] $secString
     )
     return [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($secString))
 }
@@ -19,18 +19,17 @@ function Secure_String_To_String
 function Message_Box
 {
     Param(
-        [string]$Header = "Not defined",
-        [string]$Message = "Not defined",
-        [string]$Buttons = "Ok",
-        [string]$Type = "Information"
+        [String]$Header = "Not defined",
+        [String]$Message = "Not defined",
+        [String]$Buttons = "Ok",
+        [String]$Type = "Information"
     )
-    Write-Host $Message
-    [System.Windows.MessageBox]::Show("$Message", $Header, $Buttons, $Type)
+    [System.Windows.MessageBox]::Show($Message, $Header, $Buttons, $Type) # Creates message box
 }
 
 function Get_User_Information
 {
-    param(
+    Param(
         [string[]] $Object_Items = "SamAccountName, Name, ObjectClass, Enabled"
     )
     Write-Host ($AD_User | Format-Table | Out-String)
@@ -51,11 +50,11 @@ function Password_Changer
         Get_User_Information("SamAccountName")
         $AD_User | Set-ADAccountPassword -NewPassword $pwd -Reset
         $AD_User | Set-ADUser -ChangePasswordAtLogon $True
-        [System.Windows.MessageBox]::Show("Password was changed successfully!", "Success", "Ok", "Information")
-    } 
+        Message_Box -Message "Password was changed successfully!" -Header "Success" -Buttons "Ok" -Type "Information"
+    }
     else
     {
-        [System.Windows.MessageBox]::Show("Password's didn't match!", "Error", "Ok", "Error")
+        Message_Box -Message "Password's didn't match!", -Header"Error", -Buttons "Ok", -Type "Error"
     }
 }
 
