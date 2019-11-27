@@ -1,5 +1,10 @@
 using namespace System.Management.Automation.Host
-clear # Cleaner terminal when run
+
+# Add support for message boxes to shells that does not have them supported.
+[void][System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
+[void][System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms") 
+
+Clear-Host # Cleaner terminal when run
 
 
 function Program_Version
@@ -50,7 +55,7 @@ function Password_Changer
 
 function Select_New_User
 {
-    clear
+    Clear-Host
     return 0
 }
 
@@ -90,7 +95,7 @@ function New_Menu {
         0 { Get_User_Information }
         1 { Password_Changer }
         2 { return Select_New_User }
-        3 { clear; Program_Version }
+        3 { Clear-Host; Program_Version }
     }
 
 }
@@ -116,7 +121,7 @@ while($True)
         if(!$AD_User)
         {
             Message_Box -Message "No user with the name '$username' was found." -Header "Oh dear" -Buttons "Ok" -Type "Warning"
-            clear; break;
+            Clear-Host; break;
         }
 
         Get_User_Information
