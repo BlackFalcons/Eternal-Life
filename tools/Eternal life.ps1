@@ -1,4 +1,4 @@
-using namespace System.Management.Automation.Host
+﻿using namespace System.Management.Automation.Host
 clear # Cleaner terminal when run
 
 function Program_Version
