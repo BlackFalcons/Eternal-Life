@@ -22,7 +22,7 @@ function Message_Box
 
 function Get_User_Information
 {
-    Write-Host $AD_User | Format-Table -Property SamAccountName Name Enabled | Out-String
+    Write-Host $AD_User | Format-Table -Property "SamAccountName" | Out-String
 }
 
 
