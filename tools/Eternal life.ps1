@@ -1,5 +1,11 @@
-﻿using namespace System.Management.Automation.Host
+using namespace System.Management.Automation.Host
 clear # Cleaner terminal when run
+
+function Program_Version
+{
+    # Program version
+    Write-Host "$program_title"
+}
 
 
 function Secure_String_To_String
@@ -75,21 +81,25 @@ function New-Menu {
         0 { Get_User_Information }
         1 { Password_Changer }
         2 { return Select_New_User }
-        3 { clear }
+        3 { clear; Program_Version }
     }
 
 }
 
-# Program version
+
+# Program info
 $program_version = "1.0"
 $program_title = "Eternal life $program_version `n"
+
 
 # Active Directory Domain and Organizational Unit data
 $RYVS_Auto_Elever_OU = "OU=Auto Elever,OU=Brukere,OU=RYVS,OU=Virksomheter"
 $BFK_DC = "DC=bfkskole,DC=top,DC=no"
 
+
 while($True)
 {
+    Program_Version
     $username = Read-Host -Prompt "Username" # Active Directory username
     while($True)
     {
