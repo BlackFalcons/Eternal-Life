@@ -1,5 +1,6 @@
-﻿using namespace System.Management.Automation.Host
+using namespace System.Management.Automation.Host
 clear # Cleaner terminal when run
+
 
 function Program_Version
 {
@@ -24,7 +25,7 @@ function Message_Box
         [String]$Buttons = "Ok",
         [String]$Type = "Information"
     )
-    [System.Windows.MessageBox]::Show($Message, $Header, $Buttons, $Type) # Creates message box
+    [System.Windows.Forms.MessageBox]::Show($Message, $Header, $Buttons, $Type) # Creates message box
 }
 
 function Get_User_Information
@@ -126,7 +127,7 @@ while($True)
     {
         if(!$AD_User)
         {
-            Message_Box -Message "No user with the name was found." -Header "Oh dear" -Buttons "Ok" -Type "Warning"
+            Message_Box -Message "No user with the name '$username' was found." -Header "Oh dear" -Buttons "Ok" -Type "Warning"
             clear; break;
         }
 
