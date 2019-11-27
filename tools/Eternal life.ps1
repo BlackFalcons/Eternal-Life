@@ -22,11 +22,7 @@ function Message_Box
 
 function Get_User_Information
 {
-    Param(
-        [string[]] $Object_Items = "SamAccountName, Name, ObjectClass, Enabled"
-    )
-    Write-Host ($AD_User | Format-Table | Out-String)
-
+    Write-Host $AD_User | Format-Table -Property SamAccountName Name Enabled | Out-String
 }
 
 
@@ -40,7 +36,7 @@ function Password_Changer
 
     if ($pwd_txt -ceq $pwd_txt_confirm) # Check if both password's match
     {
-        Get_User_Information("SamAccountName")
+        Get_User_Information
         $AD_User | Set-ADAccountPassword -NewPassword $pwd -Reset
         $AD_User | Set-ADUser -ChangePasswordAtLogon $True
         Message_Box -Message "Password was changed successfully!" -Header "Success" -Buttons "Ok" -Type "Information"
