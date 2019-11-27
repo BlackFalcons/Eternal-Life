@@ -1,4 +1,4 @@
-using namespace System.Management.Automation.Host
+﻿using namespace System.Management.Automation.Host
 clear # Cleaner terminal when run
 
 function Program_Version
@@ -66,22 +66,32 @@ function Select_New_User
 }
 
 
-function New-Menu {
+function New_Menu_Item
+{
+	Param(
+		[String]$Option = "No Option provided",
+		[String]$Tutorial = "No information avilable."
+	)
+	[ChoiceDescription]::new($Option, $Tutorial)
+}
+
+
+function New_Menu {
     [CmdletBinding()]
-    param(
+    Param(
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Title,
+        [String]$Title,
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Question
+        [String]$Question
     )
 
-    $Change_Password = [ChoiceDescription]::new('&Change Password', "Option will change AD User's password to user selected password.")
-    $Get_User_Info = [ChoiceDescription]::new('&User Info', "Option will display data about the selected user.")
-    $Select_New_User = [ChoiceDescription]::new("&Select new user", "Option will allow user to select a new user to administrate.")
-    $Clear_Terminal = [ChoiceDescription]::new("&Wipe terminal", "Option will ")
+    $Change_Password = Menu_Item -Option "&Change Password" -Tutorial "Option will change AD User's password to user selected password."
+    $Get_User_Info = Menu_Item -Option '&User Info' -Tutorial "Option will display data about the selected user."
+    $Select_New_User = Menu_Item -Option "&Select new user" -Tutorial "Option will allow user to select a new user to administrate."
+    $Clear_Terminal = Menu_Item -Option "&Wipe terminal" -Tutorial "Option will clear the terminal"
     
     
     $options = [ChoiceDescription[]]($Get_User_Info, $change_password, $Select_New_User, $Clear_Terminal)
@@ -122,7 +132,7 @@ while($True)
 
         Get_User_Information
         
-        $Main_Menu = New-Menu -Title $program_title -Question 'Please select option'
+        $Main_Menu = New_Menu -Title $program_title -Question 'Please select option'
         
         
         if($Main_Menu -eq 0)
