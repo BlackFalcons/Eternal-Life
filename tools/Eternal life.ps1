@@ -101,9 +101,15 @@ while($True)
 {
     Program_Version
     $username = Read-Host -Prompt "Username" # Active Directory username
+    $AD_User = Get-ADUser -SearchBase "$RYVS_Auto_Elever_OU,$BFK_DC" -Filter {SamAccountName -eq $username} # AD user selected by $username
     while($True)
     {
-        $AD_User = Get-ADUser -SearchBase "$RYVS_Auto_Elever_OU,$BFK_DC" -Filter {SamAccountName -eq $username} # AD user selected by $username
+        if(!$AD_User)
+        {
+            Message_Box -Message "No user with the name was found." -Header "Oh dear" -Buttons "Ok" -Type "Warning"
+            clear; break;
+        }
+
         Get_User_Information
         
         $Main_Menu = New-Menu -Title $program_title -Question 'Please select option'
