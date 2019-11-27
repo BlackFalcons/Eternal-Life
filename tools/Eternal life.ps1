@@ -9,14 +9,6 @@ function Program_Version
 }
 
 
-function Secure_String_To_String
-{
-    Param(
-    [String] $secString
-    )
-    return [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($secString))
-}
-
 function Message_Box
 {
     Param(
@@ -43,8 +35,8 @@ function Password_Changer
 {
     $pwd = Read-Host "Password: " -AsSecureString # Request users password
     $pwd_confirm = Read-Host "Re-enter Password: " -AsSecureString # Request user to re-type password
-    $pwd_txt = Secure_String_To_String($pwd)
-    $pwd_txt_confirm = Secure_String_To_String($pwd_confirm)
+    $pwd_txt = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pwd))
+    $pwd_txt_confirm = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pwd_confirm))
 
     if ($pwd_txt -ceq $pwd_txt_confirm) # Check if both password's match
     {
