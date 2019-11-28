@@ -105,7 +105,6 @@ function New_Menu {
         2 { return Select_New_User }
         3 { Clear-Host; Program_Version -Program_Title $program_title  }
     }
-
 }
 
 
