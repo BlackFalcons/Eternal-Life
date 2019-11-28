@@ -5,7 +5,7 @@ using namespace System.Management.Automation.Host
 [void][System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
 
 Clear-Host # Cleaner terminal when run
-# test123321
+
 
 function Program_Version
 {
