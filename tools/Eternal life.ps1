@@ -4,8 +4,6 @@ using namespace System.Management.Automation.Host
 [void][System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
 [void][System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
 
-Clear-Host # Cleaner terminal when run
-
 
 function Program_Version
 {
@@ -116,6 +114,7 @@ $program_title = "Eternal life $program_version `n"
 # Active Directory Domain and Organizational Unit data
 $RYVS_Auto_Elever_OU = "OU=Auto Elever,OU=Brukere,OU=RYVS,OU=Virksomheter"
 $BFK_DC = "DC=bfkskole,DC=top,DC=no"
+Clear-Host # Cleaner terminal when run
 
 
 while($True)
