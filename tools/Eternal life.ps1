@@ -2,7 +2,7 @@ using namespace System.Management.Automation.Host
 
 # Add support for message boxes to shells that does not have them supported.
 [void][System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
-[void][System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms") 
+[void][System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
 
 Clear-Host # Cleaner terminal when run
 
@@ -29,6 +29,7 @@ function Message_Box
     )
     [System.Windows.Forms.MessageBox]::Show($Message, $Header, $Buttons, $Type) # Creates message box
 }
+
 
 function Get_User_Information
 {
