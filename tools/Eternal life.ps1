@@ -9,8 +9,13 @@ Clear-Host # Cleaner terminal when run
 
 function Program_Version
 {
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Program_Title
+    )
     # Program version
-    Write-Host $program_title
+    Write-Host $Program_Title
 }
 
 
@@ -63,8 +68,10 @@ function Select_New_User
 function New_Menu_Item
 {
 	Param(
-		[String]$Option = "No Option provided",
-		[String]$Tutorial = "No information avilable."
+        [Parameter(Mandatory)]
+		[String]$Option,
+        
+        [String]$Tutorial = "No information avilable."
 	)
 	[ChoiceDescription]::new($Option, $Tutorial)
 }
@@ -95,7 +102,7 @@ function New_Menu {
         0 { Get_User_Information }
         1 { Password_Changer }
         2 { return Select_New_User }
-        3 { Clear-Host; Program_Version }
+        3 { Clear-Host; Program_Version -Program_Title $program_title  }
     }
 
 }
@@ -113,7 +120,7 @@ $BFK_DC = "DC=bfkskole,DC=top,DC=no"
 
 while($True)
 {
-    Program_Version
+    Program_Version -Program_Title $program_title
     $username = Read-Host -Prompt "Username" # Active Directory username
     $AD_User = Get-ADUser -SearchBase "$RYVS_Auto_Elever_OU,$BFK_DC" -Filter {SamAccountName -eq $username} # AD user selected by $username
     while($True)
