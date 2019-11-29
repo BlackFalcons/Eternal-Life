@@ -52,7 +52,7 @@ function Password_Changer
     }
     else
     {
-		Message_Box -Message "Password's didn't match!" -Header "Error" -Buttons "Ok" -Type "Error"
+        Message_Box -Message "Password's didn't match!" -Header "Error" -Buttons "Ok" -Type "Error"
     }
 }
 
