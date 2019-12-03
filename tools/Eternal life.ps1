@@ -31,7 +31,12 @@ function Message_Box
 
 function Get_User_Information
 {
-    Write-Host "Selected user:" $AD_User.SamAccountName "`nEnabled:" $AD_User.Enabled
+    if(!$AD_User.Enabled)
+    {
+        Write-Host "Warning, this user is locked!" -ForegroundColor Red
+    }
+    Write-Host "Selected user:" $AD_User.SamAccountName
+    
 }
 
 
@@ -89,19 +94,29 @@ function New_Menu {
     )
 
     $Change_Password = New_Menu_Item -Option "&Change Password" -Tutorial "Option will change AD User's password to user selected password."
-    $Get_User_Info = New_Menu_Item -Option '&User Info' -Tutorial "Option will display data about the selected user."
+    $Get_Bitlocker_Info = New_Menu_Item -Option '&Bitlocker Recovery' -Tutorial "Option will display bitlocker recovery information about the selected AD Computer."
     $Select_New_User = New_Menu_Item -Option "&Select new user" -Tutorial "Option will allow user to select a new user to administrate."
     $Clear_Terminal = New_Menu_Item -Option "&Wipe terminal" -Tutorial "Option will clear the terminal"
     
     
-    $options = [ChoiceDescription[]]($Get_User_Info, $change_password, $Select_New_User, $Clear_Terminal)
+    $options = [ChoiceDescription[]]($Get_Bitlocker_Info, $change_password, $Clear_Terminal, $Select_New_User)
     $result = $host.ui.PromptForChoice($Title, $Question, $options, 0)
 
     switch ($result) {
-        0 { Get_User_Information }
+        0 
+        { 
+            if($BitLocker_Info)
+            {
+                $BitLocker_Info
+            } else
+            {
+                Write-Host "You have not selected a computer, please go back and select a valid computer to get bitlocker information about it."
+                Read-Host "Press enter to continue..."; Clear-Host
+            }
+        }
         1 { Password_Changer }
-        2 { return Select_New_User }
-        3 { Clear-Host; Program_Version -Program_Title $program_title  }
+        2 { Clear-Host; Program_Version -Program_Title $program_title  }
+        3 { return Select_New_User }
     }
 }
 
@@ -109,22 +124,36 @@ function New_Menu {
 # Program info
 $program_version = "1.0"
 $program_title = "Eternal life $program_version `n"
-
+$Dev_Mode = $False
 
 # Active Directory Domain and Organizational Unit data
-$RYVS_Auto_Elever_OU = "OU=Auto Elever,OU=Brukere,OU=RYVS,OU=Virksomheter"
 $BFK_DC = "DC=bfkskole,DC=top,DC=no"
+$RYVS_Auto_Elever_OU = "OU=Auto Elever,OU=Brukere,OU=RYVS,OU=Virksomheter,$BFK_DC"
+$Computers_OU = "OU=Maskiner Elev,$BFK_DC"
+
+
 Clear-Host # Cleaner terminal when run
-
-
 while($True)
 {
     Program_Version -Program_Title $program_title
+    # Active Directory user information
     $username = Read-Host -Prompt "Username" # Active Directory username
-    $AD_User = Get-ADUser -SearchBase "$RYVS_Auto_Elever_OU,$BFK_DC" -Filter {SamAccountName -eq $username} # AD user selected by $username
+    $AD_User = Get-ADUser -SearchBase $RYVS_Auto_Elever_OU -Filter {SamAccountName -eq $username} # AD user selected by $username
+    
+    # Active directory computer information
+    $AD_Computer_Name = Read-Host -Prompt "[Optinal] Computer name: "
+    if($AD_Computer_Name)
+    {
+        $AD_Computer = Get-ADComputer -Identity $AD_Computer_Name -SearchBase $Computers_OU
+        if($AD_Computer)
+        {
+            $BitLocker_Info = $AD_Computer | Read-ADRecoveryInformation
+        }
+    }
+    
     while($True)
     {
-        if(!$AD_User)
+        if(!$AD_User -And $Dev_Mode -eq $False)
         {
             Message_Box -Message "No user with the name '$username' was found." -Header "Oh dear" -Buttons "Ok" -Type "Warning"
             Clear-Host; break;
