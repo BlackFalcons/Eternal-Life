@@ -35,7 +35,7 @@ function Get_User_Information
     {
         Write-Host "Warning, this user is locked!" -ForegroundColor Red
     }
-    Write-Host "Selected user:" $AD_User.SamAccountName
+    Write-Host "Selected user:" $AD_User.SamAccountName "`nEmployeeID: " $AD_User.EmployeeID
     
 }
 
