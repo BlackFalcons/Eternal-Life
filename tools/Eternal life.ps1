@@ -40,11 +40,10 @@ function Get_User_Information
     Write-Host "Selected user:" $AD_User.SamAccountName
     
     
-    if($AD_User.EmployeeID)
+    if($AD_User.employeeID)
     {
-        Write-Host "EmployeeID: " $AD_User.EmployeeID
+        Write-Host "Employee ID: " $AD_User.employeeID
     }
-    
 }
 
 
