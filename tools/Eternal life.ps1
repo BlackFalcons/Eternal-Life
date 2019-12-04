@@ -35,7 +35,8 @@ function Get_User_Information
     {
         Write-Host "Warning, this user is locked!" -ForegroundColor Red
     }
-    
+
+
     if($AD_User.SamAccountName)
     {
         Write-Host "Selected user:" $AD_User.SamAccountName
@@ -106,14 +107,14 @@ function New_Menu {
     $Get_Bitlocker_Info = New_Menu_Item -Option '&Bitlocker Recovery' -Tutorial "Option will display bitlocker recovery information about the selected AD Computer."
     $Select_New_User = New_Menu_Item -Option "&Select new user" -Tutorial "Option will allow user to select a new user to administrate."
     $Clear_Terminal = New_Menu_Item -Option "&Wipe terminal" -Tutorial "Option will clear the terminal"
-    
-    
+
+
     $options = [ChoiceDescription[]]($Get_Bitlocker_Info, $change_password, $Clear_Terminal, $Select_New_User)
     $result = $host.ui.PromptForChoice($Title, $Question, $options, 0)
 
     switch ($result) {
-        0 
-        { 
+        0
+        {
             if($BitLocker_Info)
             {
                 $BitLocker_Info
@@ -159,7 +160,7 @@ while($True)
             $BitLocker_Info = $AD_Computer | Read-ADRecoveryInformation
         }
     }
-    
+
     while($True)
     {
         if(!$AD_User -And $Dev_Mode -eq $False)
@@ -169,10 +170,10 @@ while($True)
         }
 
         Get_User_Information
-        
+
         $Main_Menu = New_Menu -Title $program_title -Question 'Please select option'
-        
-        
+
+
         if($Main_Menu -eq 0)
         {
             break
