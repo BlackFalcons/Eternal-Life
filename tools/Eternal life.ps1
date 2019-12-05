@@ -75,7 +75,7 @@ function Password_Changer
 function Select_New_User
 {
     Clear-Host
-    return 0
+    return $False
 }
 
 
@@ -174,7 +174,7 @@ while($True)
         $Main_Menu = New_Menu -Title $program_title -Question 'Please select option'
 
 
-        if($Main_Menu -eq 0)
+        if(!$Main_Menu)
         {
             break
         }
