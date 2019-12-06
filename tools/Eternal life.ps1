@@ -122,18 +122,12 @@ function New_Menu {
                 $AD_Computer = Get-ADComputer -Identity $AD_Computer_Name -SearchBase $Computers_OU
                 if($AD_Computer)
                 {
-                    $BitLocker_Info = $AD_Computer | Read-ADRecoveryInformation
+                    write-host $AD_Computer
+                } elseif (!$AD_Computer) 
+                {
+                    Write-Host "You have not selected a computer, please go back and select a valid computer to get bitlocker information about it."
+                    Read-Host "`nPress enter to continue..."; Clear-Host
                 }
-            }
-
-
-            if($BitLocker_Info)
-            {
-                $BitLocker_Info
-            } else
-            {
-                Write-Host "You have not selected a computer, please go back and select a valid computer to get bitlocker information about it."
-                Read-Host "Press enter to continue..."; Clear-Host
             }
         }
         1 { Password_Changer }
