@@ -42,10 +42,11 @@ function Get_User_Information
         Write-Host "Selected user:" $AD_User.SamAccountName
     }
 
-
-    if($AD_User.employeeID)
+    if($AD_User.EmployeeID)
     {
-        Write-Host "Employee ID: " $AD_User.employeeID
+        Write-Host "Employee ID: " $AD_User.EmployeeID
+    } else {
+        Write-Host "No employee ID found for the selected user."
     }
 }
 
@@ -115,6 +116,17 @@ function New_Menu {
     switch ($result) {
         0
         {
+            $AD_Computer_Name = Read-Host -Prompt "Computer name: "
+            if($AD_Computer_Name)
+            {
+                $AD_Computer = Get-ADComputer -Identity $AD_Computer_Name -SearchBase $Computers_OU
+                if($AD_Computer)
+                {
+                    $BitLocker_Info = $AD_Computer | Read-ADRecoveryInformation
+                }
+            }
+
+
             if($BitLocker_Info)
             {
                 $BitLocker_Info
@@ -148,18 +160,7 @@ while($True)
     Program_Version -Program_Title $program_title
     # Active Directory user information
     $username = Read-Host -Prompt "Username" # Active Directory username
-    $AD_User = Get-ADUser -SearchBase $RYVS_Auto_Elever_OU -Filter {SamAccountName -eq $username} # AD user selected by $username
-    
-    # Active directory computer information
-    $AD_Computer_Name = Read-Host -Prompt "[Optinal] Computer name: "
-    if($AD_Computer_Name)
-    {
-        $AD_Computer = Get-ADComputer -Identity $AD_Computer_Name -SearchBase $Computers_OU
-        if($AD_Computer)
-        {
-            $BitLocker_Info = $AD_Computer | Read-ADRecoveryInformation
-        }
-    }
+    $AD_User = Get-ADUser -SearchBase $RYVS_Auto_Elever_OU -Filter {SamAccountName -eq $username} -Properties * # AD user selected by $username
 
     while($True)
     {
