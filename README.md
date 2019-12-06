@@ -7,7 +7,8 @@ By making this script and running through it with him to teach him the use of Po
 The script is made to do easy repetetive tasks even easier by making the process much shorter for the administrator himself.
 
 ## Features
-- Get information about selected user.
+- Display if the AD user is locked.
+- Display selected AD User's username
+- Display employee ID.
 - Password changer.
-- Wipe terminal.
 - Select new user.
