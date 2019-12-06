@@ -107,15 +107,15 @@ function New_Menu {
     $Change_Password = New_Menu_Item -Option "&Change Password" -Tutorial "Option will change AD User's password to user selected password."
     $Get_Bitlocker_Info = New_Menu_Item -Option '&Bitlocker Recovery' -Tutorial "Option will display bitlocker recovery information about the selected AD Computer."
     $Select_New_User = New_Menu_Item -Option "&Select new user" -Tutorial "Option will allow user to select a new user to administrate."
-    $Clear_Terminal = New_Menu_Item -Option "&Wipe terminal" -Tutorial "Option will clear the terminal"
 
 
-    $options = [ChoiceDescription[]]($Get_Bitlocker_Info, $change_password, $Clear_Terminal, $Select_New_User)
+    $options = [ChoiceDescription[]]($Get_Bitlocker_Info, $change_password, $Select_New_User)
     $result = $host.ui.PromptForChoice($Title, $Question, $options, 0)
 
     switch ($result) {
         0
         {
+            Clear-Host
             $AD_Computer_Name = Read-Host -Prompt "Computer name: "
             if($AD_Computer_Name)
             {
@@ -137,8 +137,7 @@ function New_Menu {
             }
         }
         1 { Password_Changer }
-        2 { Clear-Host; Program_Version -Program_Title $program_title  }
-        3 { return Select_New_User }
+        2 { return Select_New_User }
     }
 }
 
