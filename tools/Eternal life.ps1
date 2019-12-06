@@ -113,8 +113,7 @@ function New_Menu {
     $result = $host.ui.PromptForChoice($Title, $Question, $options, 0)
 
     switch ($result) {
-        0
-        {
+        0 {
             Clear-Host
             $AD_Computer_Name = Read-Host -Prompt "Computer name: "
             if($AD_Computer_Name)
