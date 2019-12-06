@@ -169,13 +169,13 @@ while($True)
             Message_Box -Message "No user with the name '$username' was found." -Header "Oh dear" -Buttons "Ok" -Type "Warning"
             Clear-Host; break;
         }
-
+        Clear-Host
         Get_User_Information
 
         $Main_Menu = New_Menu -Title $program_title -Question 'Please select option'
 
 
-        if(!$Main_Menu)
+        if($Main_Menu -eq $False)
         {
             break
         }
