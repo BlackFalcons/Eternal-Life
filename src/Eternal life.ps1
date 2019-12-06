@@ -31,6 +31,11 @@ function Message_Box
 
 function Get_User_Information
 {
+    if($Dev_Mode)
+    {
+        Write-Host "Developer mode is active`n" -ForegroundColor Magenta
+    }
+
     if(!$AD_User.Enabled)
     {
         Write-Host "Warning, this user is locked!" -ForegroundColor Red
