@@ -1,8 +1,11 @@
 using namespace System.Management.Automation.Host
+using namespace System.Reflection
+using namespace System.Windows.Forms
+using namespace System.Runtime.InteropServices
 
 # Add support for message boxes to shells that does not have them supported.
-[void][System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
-[void][System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+[void][Assembly]::LoadWithPartialName("System.Drawing")
+[void][Assembly]::LoadWithPartialName("System.Windows.Forms")
 
 
 function Program_Version
@@ -25,7 +28,7 @@ function Message_Box
         [String]$Buttons = "Ok",
         [String]$Type = "Information"
     )
-    [System.Windows.Forms.MessageBox]::Show($Message, $Header, $Buttons, $Type) # Creates message box
+    [MessageBox]::Show($Message, $Header, $Buttons, $Type) # Creates message box
 }
 
 
@@ -61,8 +64,8 @@ function Password_Changer
 {
     $pwd = Read-Host "Password: " -AsSecureString # Request users password
     $pwd_confirm = Read-Host "Re-enter Password: " -AsSecureString # Request user to re-type password
-    $pwd_txt = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pwd))
-    $pwd_txt_confirm = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pwd_confirm))
+    $pwd_txt = [Marshal]::PtrToStringAuto([Marshal]::SecureStringToBSTR($pwd))
+    $pwd_txt_confirm = [Marshal]::PtrToStringAuto([Marshal]::SecureStringToBSTR($pwd_confirm))
 
     if ($pwd_txt -ceq $pwd_txt_confirm) # Check if both password's match
     {
