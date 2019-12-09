@@ -11,4 +11,3 @@ The script is made to do easy repetetive tasks even easier by making the process
 - Display selected AD User's username
 - Display employee ID.
 - Password changer.
-- Select new user.
