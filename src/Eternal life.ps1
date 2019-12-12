@@ -146,7 +146,7 @@ function New_Menu {
 # Program info
 $program_version = "1.0"
 $program_title = "Eternal life $program_version `n"
-$Dev_Mode = $False
+$Dev_Mode = $True
 
 # Active Directory Domain and Organizational Unit data
 $BFK_DC = "DC=bfkskole,DC=top,DC=no"
