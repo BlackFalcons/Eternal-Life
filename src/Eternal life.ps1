@@ -123,7 +123,10 @@ function New_Menu {
     switch ($result) {
         0 {
             Clear-Host
+            Program_Version $program_title
             $AD_Computer_Name = Read-Host -Prompt "Computer name: "
+            Clear-Host
+            Program_Version $program_title
             if($AD_Computer_Name)
             {
                 $AD_Computer = Get-ADComputer -Identity $AD_Computer_Name -SearchBase $Computers_OU
@@ -132,7 +135,8 @@ function New_Menu {
                     write-host $AD_Computer
                 } elseif (!$AD_Computer) 
                 {
-                    Write-Host "You have not selected a computer, please go back and select a valid computer to get bitlocker information about it."
+                    Clear-Host
+                    Write-Host "No computer was found with the name: $AD_Computer_Name"
                     Read-Host "`nPress enter to continue..."; Clear-Host
                 }
             }
@@ -157,7 +161,7 @@ $Computers_OU = "OU=Maskiner Elev,$BFK_DC"
 Clear-Host # Cleaner terminal when run
 while($True)
 {
-    Program_Version -Program_Title $program_title
+    Program_Version $program_title
     # Active Directory user information
     $username = Read-Host -Prompt "Username" # Active Directory username
     $AD_User = Get-ADUser -SearchBase $RYVS_Auto_Elever_OU -Filter {SamAccountName -eq $username} -Properties * # AD user selected by $username
