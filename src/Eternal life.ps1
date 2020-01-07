@@ -3,6 +3,7 @@ using namespace System.Reflection
 using namespace System.Windows.Forms
 using namespace System.Runtime.InteropServices
 
+
 # Add support for message boxes to shells that does not have them supported.
 [void][Assembly]::LoadWithPartialName("System.Drawing")
 [void][Assembly]::LoadWithPartialName("System.Windows.Forms")
