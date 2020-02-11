@@ -138,7 +138,7 @@ function New_Menu {
                 {
                     Clear-Host
                     Write-Host "No computer was found with the name: $AD_Computer_Name"
-                    Read-Host "`nPress enter to continue..."; Clear-Host
+                    Write-Host "`nPress enter to continue..."; $Host.UI.ReadLine(); Clear-Host
                 }
             }
         }
